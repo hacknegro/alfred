@@ -1,4 +1,6 @@
 <?php
+
+
 /*
  * DEFINE TOKEN E API
  */
@@ -32,7 +34,7 @@ function processaMensagem($message, $alfred) {
         } else if ($time >= "18") {
             $periodo = 'noite';
         }
-        $palavras = preg_split("/\s|(?<=\w)(?=[.,:;!?)])|(?<=[.,!()?\x{201C}])/u", $text, -1, PREG_SPLIT_NO_EMPTY);
+        $palavras = preg_split("/\s+/", $criterio);
         $intent = array_values(preg_grep("(^piada(.)?$|^batman(.)?$|^bat-man(.)?$|^profissão(.)?$|^futebol(.)?$|^time(.)?$|^raiz(.)?$|^quadrada(.)?$|^d(o|ó|ó)lar(.)?$|^euro(.)?$|^hora(.)?$|^data(.)?$|^alfred(.)?$)", $palavras));
         
         /*
@@ -85,6 +87,8 @@ function processaMensagem($message, $alfred) {
                 $mensagem = "Bom dia, patrão {$user}.";
             } else {
                 $mensagem = "Mas está de {$periodo}, patrão {$user}";
+        } else if (substr(strtolower($intent[0]), 0, 5) == 'chato') {
+            $mensagem = "Sou o mordomo mais legal do telegran";
             }
         } else if (strpos(strtolower($msg), 'que horas são') !== false) {
             $mensagem = "São " . $time . " e " . date('i') . ", patrão {$user}";
